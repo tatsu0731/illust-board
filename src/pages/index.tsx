@@ -1,3 +1,4 @@
+import Logout from "@/components/atoms/Logout";
 import PostActionSection from "@/components/molecules/PostActionSection";
 import SettingSection from "@/components/molecules/SettingSection";
 import Board from "@/components/templates/Board";
@@ -7,13 +8,16 @@ import Profile from "@/components/templates/Profile";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Header />
-      <Profile />
-      <SettingSection />
-      <Board />
-      <PostActionSection />
+      <main className="max-w-72 mx-auto">
+        <Profile />
+        <SettingSection />
+        <Board />
+        <PostActionSection />
+        <Logout />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }
