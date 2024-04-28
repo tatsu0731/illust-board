@@ -19,9 +19,7 @@ export default function UploadSection() {
         try {
             // 画像アップロードのための記述
             const storageRef = ref(storage, "image/" + image.name);
-            uploadBytes(storageRef, image).then((snapshot) => {
-                console.log('Uploaded a blob or file!');
-            });
+            await uploadBytes(storageRef, image);
             // DBへの入力のための記述
             const docRef = await addDoc(collection(db, "images"), {
                 userId:auth.currentUser.uid,

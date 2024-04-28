@@ -1,39 +1,45 @@
-import { useEffect } from "react";
-import Illust from "../atoms/Illust";
+import { useEffect, useState } from "react";
 import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "@/Firebase/firebase";
+import { auth, db, storage } from "@/Firebase/firebase";
 import Image from "next/image";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+
 
 export default function Board() {
-    useEffect(() => {
-        const fetch = async () => {
-            console.log(await getDownloadURL(ref(storage, "image/スクリーンショット 2024-01-08 7.12.48.png")))
-        }
-        fetch()
-    }, [])
+    const [images, setImages] = useState([]);
 
-    return(
+    useEffect(() => {
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+            const q = query(
+                collection(db, "images"),
+                where("userId", "==", user.uid)
+            );
+            const querySnapshot = await getDocs(q);
+            const tmpImages = [];
+            querySnapshot.forEach(async (doc) => {
+                tmpImages.push({
+                    id: doc.id,
+                    ...doc.data()
+                });
+            });
+            for (const image of tmpImages) {
+                image.url = await getDownloadURL(ref(storage, image.imagePath));
+            }
+            setImages(tmpImages);
+            } else {
+            }
+        });
+    },[]);
+
+    return (
         <section className="flex justify-center">
-            <div className="grid grid-cols-3 gap-1">
-                <Illust />
-                <Illust />
-                <Illust />
-                <Illust />
-                <Illust />
-                <Illust />
-            </div>
-            <Image
-            height={50}
-            width={50}
-            alt="画像"
-            src={'https://firebasestorage.googleapis.com/v0/b/illust-board.appspot.com/o/image%2FIMG_3848.jpeg?alt=media&token=d96bdd83-3e8b-4450-8231-921ffe064448'}
-            />
-            <Image
-            height={50}
-            width={50}
-            alt="画像"
-            src={'https://firebasestorage.googleapis.com/v0/b/illust-board.appspot.com/o/image%2FIMG_3848.jpeg?alt=media&token=d96bdd83-3e8b-4450-8231-921ffe064448'}
-            />
+        <div className="grid grid-cols-3 gap-1">
+            {images.map((image) => {
+            return <Image key={image.id} height={80} width={80} alt="画像" src={image.url} />
+            })}
+        </div>
         </section>
-    )
-};
+    );
+}
