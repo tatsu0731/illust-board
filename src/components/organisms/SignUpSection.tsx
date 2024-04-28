@@ -7,6 +7,7 @@ import { auth } from "@/Firebase/firebase";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function SignUpSection() {
     const router = useRouter();
@@ -17,13 +18,16 @@ export default function SignUpSection() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-        );
-        // console.log(userCredential.user);
-        router.push("/");
+        try {
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+            router.push("/");
+        } catch (error) {
+            toast.error('登録に失敗しました')
+        }
     };
 
     return (
@@ -37,6 +41,7 @@ export default function SignUpSection() {
             ログイン画面へ戻る
             </p>
         </Link>
+        <ToastContainer />
         </section>
     );
 }
