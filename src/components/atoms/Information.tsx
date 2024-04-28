@@ -1,13 +1,7 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Information() {
-
-    const router = useRouter();
-
-    const handleinformation = async () => {
-        router.push('/faq');
-    }
     return(
-        <button onClick={handleinformation} className="text-xs text-green-200">ヘルプ</button>
+        <Link href={'/faq'} className="text-xs text-green-200">ヘルプ</Link>
     )
 };
