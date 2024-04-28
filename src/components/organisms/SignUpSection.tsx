@@ -14,10 +14,14 @@ export default function SignUpSection() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleRegister = async (e) => {
         e.preventDefault();
+        if (password !== confirmPassword) {
+            toast.error('パスワードが一致しません');
+            return;
+        }
         try {
             await createUserWithEmailAndPassword(
                 auth,
@@ -34,7 +38,7 @@ export default function SignUpSection() {
         <section className="flex flex-col items-center">
         <InputAdress setEmail={setEmail} />
         <InputPassword setPassword={setPassword} />
-        <InputConfirmPassword />
+        <InputConfirmPassword setConfirmPassword={setConfirmPassword}/>
         <RegisterButton onClick={handleRegister}/>
         <Link href={"/auth/login"}>
             <p className="text-xs text-gray-400 hover:text-opacity-70">
