@@ -1,5 +1,5 @@
 import Logout from "@/components/atoms/Logout";
-import Information from "@/components/atoms/information";
+import Information from "@/components/atoms/Information";
 import PostActionSection from "@/components/molecules/PostActionSection";
 import SettingSection from "@/components/molecules/SettingSection";
 import Board from "@/components/templates/Board";
