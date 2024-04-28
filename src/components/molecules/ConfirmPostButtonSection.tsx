@@ -1,12 +1,7 @@
-import Link from "next/link";
-import ConfirmPostButton from "../atoms/ConfirmPostButton";
-
-export default function ConfirmPostButtonSection() {
+export default function ConfirmPostButtonSection({onClick}) {
     return(
-        <section className="flex justify-center mb-4">
-            <Link href="/post">
-                <ConfirmPostButton />
-            </Link>
-        </section>
+        <div className="flex justify-center mb-4">
+                <button className="py-2 px-24 text-white font-bold bg-blue-400 rounded-lg hover:bg-opacity-70 hover:text-opacity-70" onClick={onClick}>投稿する</button>
+        </div>
     )
 };
