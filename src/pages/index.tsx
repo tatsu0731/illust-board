@@ -1,4 +1,5 @@
 import Logout from "@/components/atoms/Logout";
+import Information from "@/components/atoms/information";
 import PostActionSection from "@/components/molecules/PostActionSection";
 import SettingSection from "@/components/molecules/SettingSection";
 import Board from "@/components/templates/Board";
@@ -16,6 +17,7 @@ export default function Home() {
         <Board />
         <PostActionSection />
         <Logout />
+        <Information />
       </main>
       <Footer />
     </>
